@@ -49,10 +49,15 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		global $ID;
 		
 		// twitter card, see https://dev.twitter.com/docs/cards
-		$event->data['meta'][] = array('name' => 'twitter:card',      'content' => "summary",);
-		$event->data['meta'][] = array('name' => 'twitter:url',       'content' => wl($ID,'',true),);
-		$event->data['meta'][] = array('name' => 'twitter:title',     'content' => p_get_metadata($ID,'title',true),);
-		$event->data['meta'][] = array('name' => 'twitter:description','content' => p_get_metadata($ID,'description',true),);
+		$event->data['meta'][] = array('name' => 'twitter:card',	'content' => "summary",);
+		$event->data['meta'][] = array('name' => 'twitter:url',		'content' => wl($ID,'',true),);
+		$event->data['meta'][] = array('name' => 'twitter:title',	'content' => p_get_metadata($ID,'title',true),);
+		$d = p_get_metadata($ID, 'description');
+		if (!empty($d)) {
+			$event->data['meta'][] = array('name' => 'twitter:description',
+																	'content' => p_get_metadata($ID,$d['abstract'],true),);
+		}
+		
 		//twitter:image
 		//twitter:site
 		//twitter:site:id
