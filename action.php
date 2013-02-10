@@ -1,13 +1,5 @@
 <?php
-/**
- * 
- *
- * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
- * @author  Mark C. Prins <mprins@users.sf.net>
- */
-/**
- * DokuWiki Plugin socialcards (Action Component)
- *
+/*
  * Copyright (c) 2013 Mark C. Prins <mprins@users.sf.net>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -21,7 +13,12 @@
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+ 
+/**
+ * DokuWiki Plugin socialcards (Action Component)
  *
+ * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
  */
 if (!defined('DOKU_INC')) die();
@@ -53,15 +50,16 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		$event->data['meta'][] = array('name' => 'twitter:url',		'content' => wl($ID,'',true),);
 		$event->data['meta'][] = array('name' => 'twitter:title',	'content' => p_get_metadata($ID,'title',true),);
 		$desc = p_get_metadata($ID,'description',true);
+		dbg($desc);
+		
 		if (!empty($desc)) {
 			$event->data['meta'][] = array('name' => 'twitter:description',
-																	'content' => p_get_metadata($ID,$desc['abstract'],true),);
+																	'content' => str_replace("\n", " ", $desc['abstract']),);
 		}
-		
-		//twitter:image
-		//twitter:site
+		$event->data['meta'][] = array('name' => 'twitter:site',	'content' => $this->getConf('twitterName'),);
 		//twitter:site:id
-		//twitter:creator
+		$event->data['meta'][] = array('name' => 'twitter:creator',	'content' => $this->getConf('twitterName'),);
 		//twitter:creator:id
+		//twitter:image
 	}
 }
