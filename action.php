@@ -50,8 +50,6 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		$event->data['meta'][] = array('name' => 'twitter:url',		'content' => wl($ID,'',true),);
 		$event->data['meta'][] = array('name' => 'twitter:title',	'content' => p_get_metadata($ID,'title',true),);
 		$desc = p_get_metadata($ID,'description',true);
-		dbg($desc);
-		
 		if (!empty($desc)) {
 			$event->data['meta'][] = array('name' => 'twitter:description',
 																	'content' => str_replace("\n", " ", $desc['abstract']),);
