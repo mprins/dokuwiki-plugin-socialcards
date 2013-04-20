@@ -22,3 +22,6 @@
  * @author  Mark C. Prins <mprins@users.sf.net>
  */
 $conf['twitterName'] = '';
+$conf['fallbackImage'] = DOKU_URL . 'lib/exe/fetch.php?media=wiki:dokuwiki-128.png';
+$conf['languageTerritory'] = 'en_US';
+$conf['fbAppId'] = '';
