@@ -22,6 +22,6 @@
  * @author  Mark C. Prins <mprins@users.sf.net>
  */
 $lang['twitterName'] = 'Twitter account name for this site.';
-$lang['fallbackImage'] = 'Default (fallback) image for OpenGraph and Twitter cards. (fully qualified url)';
+$lang['fallbackImage'] = 'Default (fallback) image for OpenGraph and Twitter cards. (a fully qualified url or a media id)';
 $lang['languageTerritory'] = 'Locale (Language and territory).';
 $lang['fbAppId'] = 'Facebook App ID (optional)';

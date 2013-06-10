@@ -42,12 +42,12 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 	 *
 	 * @global string $ID page id
 	 * @global array $conf global wiki configuration
-	 * @global array $INFO 
+	 * @global array $INFO
 	 * @param Doku_Event $event the DokuWiki event. $event->data is a two-dimensional
 	 * array of all meta headers. The keys are meta, link and script.
 	 * @param unknown_type $param the parameters passed to register_hook when this
 	 * handler was registered
-	 * 
+	 *
 	 * @see http://www.dokuwiki.org/devel:event:tpl_metaheader_output
 	 */
 	public function handle_tpl_metaheader_output(Doku_Event &$event, $param) {
@@ -165,10 +165,18 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		global $ID;
 		$rel = p_get_metadata($ID, 'relation', true);
 		$img = $rel['firstimage'];
+		$more = array();
 		if (!empty($img)) {
 			return ml($img, array(), true, '&amp;', true);
 		} else {
-			return $this->getConf('fallbackImage');
+			$img = $this->getConf('fallbackImage');
+			if (substr($img, 0, 4 ) === "http") {
+				// don't use ml() as this results in a HTTP redirect
+				return $img;
+			}
+			else {
+				return ml($img, array(), true, '&amp', true);
+			}
 		}
 	}
 
