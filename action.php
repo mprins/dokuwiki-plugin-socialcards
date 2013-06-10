@@ -16,22 +16,28 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-/**
- * DokuWiki Plugin socialcards (Action Component).
- *
- * @license BSD license
- * @author  Mark C. Prins <mprins@users.sf.net>
- */
+
 if (!defined('DOKU_INC'))
 	die();
 if (!defined('DOKU_PLUGIN'))
 	define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 
 require_once DOKU_PLUGIN . 'action.php';
-
+/**
+ * DokuWiki Plugin socialcards (Action Component).
+ *
+ * @license BSD license
+ * @author  Mark C. Prins <mprins@users.sf.net>
+ */
 class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 
-	public function register(Doku_Event_Handler &$controller) {
+	/**
+	 * Register our callback for the TPL_METAHEADER_OUTPUT event.
+	 *
+	 * @param $controller Doku_Event_Handler
+	 * @see DokuWiki_Action_Plugin::register()
+	 */
+	public function register(Doku_Event_Handler $controller) {
 		$controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this,
 				'handle_tpl_metaheader_output');
 	}
@@ -114,8 +120,8 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 				'content' => dformat($_dates['modified']),);
 		$event->data['meta'][] = array('property' => 'article:author',
 				'content' => $INFO['editor'],);
-		//$event->data['meta'][] = array('property' => 'article:author','content' => p_get_metadata($ID,'creator',true),);
-		//$event->data['meta'][] = array('property' => 'article:author','content' => p_get_metadata($ID,'user',true),);
+		// $event->data['meta'][] = array('property' => 'article:author','content' => p_get_metadata($ID,'creator',true),);
+		// $event->data['meta'][] = array('property' => 'article:author','content' => p_get_metadata($ID,'user',true),);
 		$_subject = p_get_metadata($ID, 'subject', true);
 		if (!empty($_subject)) {
 			if (!is_array($_subject)) {
@@ -136,10 +142,12 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 					'content' => $lat,);
 			$event->data['meta'][] = array('property' => 'place:location:longitude',
 					'content' => $lon,);
+			// place:location:altitude (string) Altitude of location, facebook wants feet...
 		}
 
-		/* these may not be valid..
-		 $region=$geotags['region'];
+		/* these are not valid for the GeoPoint type..
+
+		$region=$geotags['region'];
 		$country=$geotags['country'];
 		$placename=$geotags['placename'];
 		if (!empty($region))    {$event->data['meta'][] = array('property' => 'place:location:region',		'content' => $region,);}
@@ -165,19 +173,16 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		global $ID;
 		$rel = p_get_metadata($ID, 'relation', true);
 		$img = $rel['firstimage'];
-		$more = array();
-		if (!empty($img)) {
-			return ml($img, array(), true, '&amp;', true);
-		} else {
+
+		if (empty($img)) {
 			$img = $this->getConf('fallbackImage');
 			if (substr($img, 0, 4 ) === "http") {
-				// don't use ml() as this results in a HTTP redirect
+				// don't use ml() as this results in a HTTP redirect after hitting the wiki
 				return $img;
 			}
-			else {
-				return ml($img, array(), true, '&amp', true);
-			}
 		}
+
+		return ml($img, array(), true, '&amp;', true);
 	}
 
 }
