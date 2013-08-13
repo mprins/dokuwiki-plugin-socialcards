@@ -44,7 +44,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 
 	/**
 	 * Retrieve metadata and add to the head of the page using appropriate meta
-	 * tags.
+	 * tags unless the page does not exist.
 	 *
 	 * @global string $ID page id
 	 * @global array $conf global wiki configuration
@@ -58,6 +58,8 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 	 */
 	public function handle_tpl_metaheader_output(Doku_Event &$event, $param) {
 		global $ID, $conf, $INFO;
+
+		if (!page_exists($ID)) return;
 
 		// twitter card, see https://dev.twitter.com/docs/cards
 		$event->data['meta'][] = array('name' => 'twitter:card',
