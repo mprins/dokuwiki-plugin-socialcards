@@ -16,10 +16,11 @@
  */
 
 /**
- * language file for socialcards plugin.
+ * Korean language file for socialcards plugin.
  *
  * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
+ * @author  Myeongjin <aranet100@gmail.com>
  */
 $lang['twitterName'] = '이 사이트에 대한 트위터 계정 이름.';
 $lang['fallbackImage'] = '오픈그래프와 트위터 카드에 대한 기본 (폴백) 그림. (정규화된 url 또는 미디어 id)';
