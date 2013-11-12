@@ -17,10 +17,12 @@
  */
 
 
-if (!defined('DOKU_INC'))
+if (!defined('DOKU_INC')){
 	die();
-if (!defined('DOKU_PLUGIN'))
+}
+if (!defined('DOKU_PLUGIN')) {
 	define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
+}
 
 require_once DOKU_PLUGIN . 'action.php';
 /**
@@ -50,16 +52,16 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 	 * @global array $conf global wiki configuration
 	 * @global array $INFO
 	 * @param Doku_Event $event the DokuWiki event. $event->data is a two-dimensional
-	 * array of all meta headers. The keys are meta, link and script.
+	 *             array of all meta headers. The keys are meta, link and script.
 	 * @param unknown_type $param the parameters passed to register_hook when this
-	 * handler was registered
+	 *             handler was registered
 	 *
 	 * @see http://www.dokuwiki.org/devel:event:tpl_metaheader_output
 	 */
 	public function handle_tpl_metaheader_output(Doku_Event &$event, $param) {
 		global $ID, $conf, $INFO;
 
-		if (!page_exists($ID)) return;
+		if (!page_exists($ID)) { return; }
 
 		// twitter card, see https://dev.twitter.com/docs/cards
 		$event->data['meta'][] = array('name' => 'twitter:card',
@@ -77,10 +79,12 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		$event->data['meta'][] = array('name' => 'twitter:site',
 				'content' => $this->getConf('twitterName'),);
 		//twitter:site:id
-		$event->data['meta'][] = array('name' => 'twitter:creator',
-				'content' => $this->getConf('twitterName'),);
+		if ($this->getConf('twitterUserName') != '') {
+			$event->data['meta'][] = array('name' => 'twitter:creator',
+				'content' => $this->getConf('twitterUserName'),);
+		}
 		//twitter:creator:id
-		$event->data['meta'][] = array('name' => 'twitter:image',
+		$event->data['meta'][] = array('name' => 'twitter:image:src',
 				'content' => $this->getImage(),);
 
 		// opengraph, see http://ogp.me/

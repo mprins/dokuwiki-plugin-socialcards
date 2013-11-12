@@ -21,7 +21,8 @@
  * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
  */
-$lang['twitterName'] = 'Twitter account naam voor deze site.';
-$lang['fallbackImage'] = 'Default (terugval) afbeelding voor OpenGraph en Twitter cards. (een vollegdige url of een media id)';
+$lang['twitterName']       = 'Twitter account naam voor deze site.';
+$lang['twitterUserName']   = 'Twitter account naam van de auteur.';
+$lang['fallbackImage']     = 'Default (terugval) afbeelding voor OpenGraph en Twitter cards. (een volledige url of een media id)';
 $lang['languageTerritory'] = 'Locale (Taal en Taalgebied).';
-$lang['fbAppId'] = 'Facebook App ID (optioneel)';
+$lang['fbAppId']           = 'Facebook App ID (optioneel)';
