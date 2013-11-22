@@ -148,7 +148,14 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 					'content' => $lat,);
 			$event->data['meta'][] = array('property' => 'place:location:longitude',
 					'content' => $lon,);
-			// place:location:altitude (string) Altitude of location, facebook wants feet...
+		}
+		// see https://developers.facebook.com/docs/opengraph/property-types/#geopoint
+		$alt = $geotags['alt'];
+		if (!empty($alt)) {
+			// facebook expects feet...
+			$alt = $alt * 3.2808;
+			$event->data['meta'][] = array('property' => 'place:location:altitude',
+					'content' => $alt,);
 		}
 
 		/* these are not valid for the GeoPoint type..
