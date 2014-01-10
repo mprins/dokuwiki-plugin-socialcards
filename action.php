@@ -195,7 +195,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 			}
 		}
 
-		return ml($img, array(), true, '&amp;', true);
+		return $img;
 	}
 
 }
