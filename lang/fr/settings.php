@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2013 Mark C. Prins <mprins@users.sf.net>
+ * Copyright (c) 2013 - 2014 Mark C. Prins <mprins@users.sf.net>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -23,6 +23,7 @@
  * @author Nicolas Friedli <nicolas@theologique.ch>
  */
 $lang['twitterName']           = 'Nom du compte twitter de ce site.';
+$lang['twitterUserName']       = 'Nom du compte twitter de l\'auteur.';
 $lang['fallbackImage']         = 'Image par défaut pour OpenGraph ou Twitter cards. (une URL absolue ou un id de média)';
 $lang['languageTerritory']     = 'Locale (langue et pays).';
 $lang['fbAppId']               = 'ID de l\'application Facebook (optionnel).';
