@@ -115,8 +115,10 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		}
 		$event->data['meta'][] = array('property' => 'og:type',
 				'content' => "article",);
-		$event->data['meta'][] = array('property' => 'og:image',
-				'content' => $this->getImage(),);
+		$ogImage = $this->getImage();
+		$secure = substr($ogImage, 0, 5) === 'https' ? ':secure_url' : '';
+		$event->data['meta'][] = array('property' => 'og:image' . $secure,
+				'content' => $ogImage,);
 
 		// article namespace http://ogp.me/ns/article#
 		$_dates = p_get_metadata($ID, 'date', true);
