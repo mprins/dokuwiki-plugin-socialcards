@@ -1,7 +1,6 @@
 <?php
-
 /*
- * Copyright (c) 2013 Mark C. Prins <mprins@users.sf.net>
+ * Copyright (c) 2013-2016 Mark C. Prins <mprins@users.sf.net>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -15,7 +14,6 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-
 
 if (!defined('DOKU_INC')){
 	die();
@@ -53,38 +51,40 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 	 * @global array $INFO
 	 * @param Doku_Event $event the DokuWiki event. $event->data is a two-dimensional
 	 *             array of all meta headers. The keys are meta, link and script.
-	 * @param unknown_type $param the parameters passed to register_hook when this
-	 *             handler was registered
+	 * @param mixed $param the parameters passed to register_hook when this
+	 *             handler was registered (not used)
 	 *
 	 * @see http://www.dokuwiki.org/devel:event:tpl_metaheader_output
 	 */
-	public function handle_tpl_metaheader_output(Doku_Event &$event, $param) {
+	public function handle_tpl_metaheader_output(Doku_Event $event, $param) {
 		global $ID, $conf, $INFO;
 
 		if (!page_exists($ID)) { return; }
 
-		// twitter card, see https://dev.twitter.com/docs/cards
+		// twitter card, see https://dev.twitter.com/cards/markup
+		// creat a summary card, see https://dev.twitter.com/cards/types/summary
 		$event->data['meta'][] = array('name' => 'twitter:card',
 				'content' => "summary",);
-		$event->data['meta'][] = array('name' => 'twitter:url',
-				'content' => wl($ID, '', true),);
+
+		$event->data['meta'][] = array('name' => 'twitter:site',
+				'content' => $this->getConf('twitterName'),);
+
 		$event->data['meta'][] = array('name' => 'twitter:title',
 				'content' => p_get_metadata($ID, 'title', true),);
+
 		$desc = p_get_metadata($ID, 'description', true);
 		if (!empty($desc)) {
 			$desc = str_replace("\n", " ", $desc['abstract']);
 			$event->data['meta'][] = array('name' => 'twitter:description',
 					'content' => $desc,);
 		}
-		$event->data['meta'][] = array('name' => 'twitter:site',
-				'content' => $this->getConf('twitterName'),);
-		//twitter:site:id
+
 		if ($this->getConf('twitterUserName') != '') {
 			$event->data['meta'][] = array('name' => 'twitter:creator',
 				'content' => $this->getConf('twitterUserName'),);
 		}
-		//twitter:creator:id
-		$event->data['meta'][] = array('name' => 'twitter:image:src',
+
+		$event->data['meta'][] = array('name' => 'twitter:image',
 				'content' => $this->getImage(),);
 
 		// opengraph, see http://ogp.me/
@@ -93,8 +93,8 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		// namespaces for a (x)html 4 template make html tag:
 		//
 		// <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl"
-		//		xmlns:og="http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"
-		//		xmlns:article="http://ogp.me/ns/article#" xmlns:place="http://ogp.me/ns/place#">
+		//       xmlns:og="http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#"
+		//       xmlns:article="http://ogp.me/ns/article#" xmlns:place="http://ogp.me/ns/place#">
 		//
 		// and for a (x)html 5 template make head tag:
 		//
