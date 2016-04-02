@@ -23,6 +23,7 @@ if (!defined('DOKU_PLUGIN')) {
 }
 
 require_once DOKU_PLUGIN . 'action.php';
+require_once(DOKU_INC.'inc/JpegMeta.php');
 /**
  * DokuWiki Plugin socialcards (Action Component).
  *
@@ -86,6 +87,8 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 
 		$event->data['meta'][] = array('name' => 'twitter:image',
 				'content' => $this->getImage(),);
+		$event->data['meta'][] = array('name' => 'twitter:image:alt',
+				'content' => $this->getImageAlt(),);
 
 		// opengraph, see http://ogp.me/
 		//
@@ -198,6 +201,33 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		}
 
 		return ml($img, array(), true, '&amp;', true);
+	}
+
+	/**
+	 * Gets the alt text for this page image.
+	 *
+	 * @global string $ID page id
+	 * @return string alt text
+	 */
+	private function getImageAlt() {
+		global $ID;
+		$rel = p_get_metadata($ID, 'relation', true);
+		$imgID = $rel['firstimage'];
+		$alt = "";
+
+		if (!empty($imgID)) {
+			require_once(DOKU_INC.'inc/JpegMeta.php');
+			$jpegmeta = new JpegMeta(mediaFN($imgID));
+			$tags = array('IPTC.Caption',
+							'EXIF.UserComment',
+							'EXIF.TIFFImageDescription',
+							'EXIF.TIFFUserComment',
+							'IPTC.Headline',
+							'Xmp.dc:title'
+							);
+			$alt = media_getTag( $tags,$jpegmeta,"");
+		}
+		return htmlspecialchars($alt);
 	}
 
 }
