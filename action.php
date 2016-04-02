@@ -23,6 +23,7 @@ if (!defined('DOKU_PLUGIN')) {
 }
 
 require_once DOKU_PLUGIN . 'action.php';
+require_once(DOKU_INC.'inc/JpegMeta.php');
 /**
  * DokuWiki Plugin socialcards (Action Component).
  *
@@ -211,16 +212,21 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 	private function getImageAlt() {
 		global $ID;
 		$rel = p_get_metadata($ID, 'relation', true);
-		$img = $rel['firstimage'];
+		$imgID = $rel['firstimage'];
 		$alt = "";
 
-		if (!empty($img)) {
-			// get image meta
-			$alt = media_getTag($img,array('IPTC.Caption','EXIF.UserComment',
-											'EXIF.TIFFImageDescription','EXIF.TIFFUserComment',
-											'IPTC.Headline','xmp.dc:title'),"");
+		if (!empty($imgID)) {
+			require_once(DOKU_INC.'inc/JpegMeta.php');
+			$jpegmeta = new JpegMeta(mediaFN($imgID));
+			$tags = array('IPTC.Caption',
+							'EXIF.UserComment',
+							'EXIF.TIFFImageDescription',
+							'EXIF.TIFFUserComment',
+							'IPTC.Headline',
+							'Xmp.dc:title'
+							);
+			$alt = media_getTag( $tags,$jpegmeta,"");
 		}
-
 		return htmlspecialchars($alt);
 	}
 
