@@ -24,14 +24,18 @@ class action_plugin_socialcards_test extends DokuWikiTest {
     public function testHeaders() {
         // make a request
         $request = new TestRequest();
-        $response = $request->execute();
+        //$response = $request->execute();
 
+        $input = array();
+
+        $response = $request->get($input,'/doku.php?id=wiki:dokuwiki&test=foo');
+        print_r($response);
         $this->assertTrue(
             strpos($response->getContent(), 'DokuWiki') !== false,
             'DokuWiki was not a word in the output'
         );
 
-        print_r($response);
+
 
         // check meta headers
         $this->assertEquals('',
