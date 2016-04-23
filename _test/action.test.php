@@ -7,6 +7,8 @@
  */
 class action_plugin_socialcards_test extends DokuWikiTest {
 
+   protected $pluginsEnabled = array('socialcards');
+
    function setUp(){
         global $conf;
 
@@ -24,8 +26,15 @@ class action_plugin_socialcards_test extends DokuWikiTest {
         $request = new TestRequest();
         $response = $request->execute();
 
+        $this->assertTrue(
+            strpos($response->getContent(), 'DokuWiki') !== false,
+            'DokuWiki was not a word in the output'
+        );
+
+        print_r($response);
+
         // check meta headers
-        $this->assertEquals('DokuWiki',
+        $this->assertEquals('',
                         $response->queryHTML('meta[name="twitter:title"]')->attr('content'));
         $this->assertEquals('@twitterName',
                         $response->queryHTML('meta[name="twitter:site"]')->attr('content'));
