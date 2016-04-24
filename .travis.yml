@@ -20,3 +20,8 @@ install:
 
 script:
   - cd _test && phpunit --stderr --group plugin_socialcards
+
+matrix:
+  allow_failures:
+    - php: "7.0"
+      env: DOKUWIKI=old-stable
