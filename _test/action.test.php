@@ -25,16 +25,13 @@ class action_plugin_socialcards_test extends DokuWikiTest {
 
     protected $pluginsEnabled = array('socialcards');
 
-    function setUp(){
+    public function setUp() {
         global $conf;
 
         parent::setUp();
 
         $conf ['plugin']['socialcards']['twitterName'] = '@twitterName';
         $conf ['plugin']['socialcards']['twitterUserName'] = '@twitterUserName';
-        // $conf ['plugin']['socialcards']['fallbackImage'] = 'wiki:dokuwiki-128.png';
-        // $conf ['plugin']['socialcards']['languageTerritory'] = 'en_US';
-        // $conf ['plugin']['socialcards']['fbAppId'] = '';
     }
 
     public function testHeaders() {
