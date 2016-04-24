@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-if (!defined('DOKU_INC')){
+if (!defined('DOKU_INC')) {
 	die();
 }
 if (!defined('DOKU_PLUGIN')) {
@@ -23,7 +23,7 @@ if (!defined('DOKU_PLUGIN')) {
 }
 
 require_once DOKU_PLUGIN . 'action.php';
-require_once(DOKU_INC.'inc/JpegMeta.php');
+require_once(DOKU_INC . 'inc/JpegMeta.php');
 /**
  * DokuWiki Plugin socialcards (Action Component).
  *
@@ -194,7 +194,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 
 		if (empty($img)) {
 			$img = $this->getConf('fallbackImage');
-			if (substr($img, 0, 4 ) === "http") {
+			if (substr($img, 0, 4) === "http") {
 				// don't use ml() as this results in a HTTP redirect after hitting the wiki
 				return $img;
 			}
@@ -216,7 +216,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 		$alt = "";
 
 		if (!empty($imgID)) {
-			require_once(DOKU_INC.'inc/JpegMeta.php');
+			require_once(DOKU_INC . 'inc/JpegMeta.php');
 			$jpegmeta = new JpegMeta(mediaFN($imgID));
 			$tags = array('IPTC.Caption',
 							'EXIF.UserComment',
@@ -225,7 +225,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 							'IPTC.Headline',
 							'Xmp.dc:title'
 							);
-			$alt = media_getTag( $tags,$jpegmeta,"");
+			$alt = media_getTag($tags, $jpegmeta, "");
 		}
 		return htmlspecialchars($alt);
 	}

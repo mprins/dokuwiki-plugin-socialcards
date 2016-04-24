@@ -23,9 +23,9 @@
  */
 class action_plugin_socialcards_test extends DokuWikiTest {
 
-   protected $pluginsEnabled = array('socialcards');
+    protected $pluginsEnabled = array('socialcards');
 
-   function setUp(){
+    function setUp(){
         global $conf;
 
         parent::setUp();
@@ -39,7 +39,7 @@ class action_plugin_socialcards_test extends DokuWikiTest {
 
     public function testHeaders() {
         $request = new TestRequest();
-        $response = $request->get(array('id'=>'wiki:dokuwiki'),'/doku.php');
+        $response = $request->get(array('id'=>'wiki:dokuwiki'), '/doku.php');
 
         print_r($response);
 
