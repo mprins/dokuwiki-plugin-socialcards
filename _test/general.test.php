@@ -27,7 +27,7 @@ class general_plugin_socialcards_test extends DokuWikiTest {
      * Simple test to make sure the plugin.info.txt is in correct format
      */
     public function test_plugininfo() {
-        $file = __DIR__.'/../plugin.info.txt';
+        $file = __DIR__ . '/../plugin.info.txt';
         $this->assertFileExists($file);
 
         $info = confToHash($file);
