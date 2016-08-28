@@ -23,6 +23,8 @@
  */
 class general_plugin_socialcards_test extends DokuWikiTest {
 
+    protected $pluginsEnabled = array('socialcards');
+
     /**
      * Simple test to make sure the plugin.info.txt is in correct format
      */
@@ -45,5 +47,16 @@ class general_plugin_socialcards_test extends DokuWikiTest {
         $this->assertTrue(mail_isvalid($info['email']));
         $this->assertRegExp('/^\d\d\d\d-\d\d-\d\d$/', $info['date']);
         $this->assertTrue(false !== strtotime($info['date']));
+    }
+
+    /**
+     * test if plugin is loaded.
+     */
+    public function test_plugin_socialcards_isloaded() {
+        global $plugin_controller;
+        $this->assertTrue(
+                    in_array('socialcards', $plugin_controller->getList()),
+                    "socialcards plugin is loaded"
+                            );
     }
 }
