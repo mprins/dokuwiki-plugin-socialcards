@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2013 Mark C. Prins <mprins@users.sf.net>
+ * Copyright (c) 2013-2016 Mark C. Prins <mprins@users.sf.net>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,5 +19,11 @@
  * language file for socialcards plugin.
  *
  * @license BSD license
- * @author  Mark C. Prins <mprins@users.sf.net>
+ * @author Mark C. Prins <mprins@users.sf.net>
+ * @author Sam01 <m.sajad079@gmail.com>
  */
+$lang['twitterName'] = 'نام حساب‌ کاربری توییتر برای این سایت';
+$lang['twitterUserName'] = 'نام حساب کاربری توییتر نویسنده';
+$lang['fallbackImage'] = 'به‌طور پیشفرض (مجدد) تصاویر برای نمودار گسترش و کارت های توییتر. (یک آدرس واجد شرایط کامل یا یک شناسه رسانه‌ای)';
+$lang['languageTerritory'] = 'مکان (زبان و قلمرو).';
+$lang['fbAppId'] = 'شناسه نرم‌افزار فیسبوک (اختیاری)';
