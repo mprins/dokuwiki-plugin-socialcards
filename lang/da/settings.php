@@ -21,7 +21,6 @@
  * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
  */
- */
 $lang['twitterName']       = 'Twitter konto for siden';
 $lang['twitterUserName']   = 'Twitter konto for forfatteren';
 $lang['fallbackImage']     = 'Standard (fallback) billede til OpenGraph og Twitter kort. (skal være en fuld URL eller et medie id)';
