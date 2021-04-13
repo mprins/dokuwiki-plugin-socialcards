@@ -113,7 +113,8 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         //
         // and for a (x)html 5 template make head tag:
         //
-        // <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article# place: http://ogp.me/ns/place#">
+        // <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#
+        //    article: http://ogp.me/ns/article# place: http://ogp.me/ns/place#">
 
         // og namespace http://ogp.me/ns#
         $event->data['meta'][] = array(
