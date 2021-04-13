@@ -1,6 +1,7 @@
 name: CI
 
-on: [push, pull_request]
+#on: [push, pull_request]
+on: [push]
 
 jobs:
     testLinux:
@@ -9,8 +10,12 @@ jobs:
         
         strategy:
             matrix:
-                php-versions: ['7.3', '7.4', '8.0']
+                php-version: ['7.3', '7.4']
                 dokuwiki-branch: [ 'master', 'stable']
+                include:
+                  - php-version: '8.0'
+                    dokuwiki-branch: 'master'
+                    experimental: true
             fail-fast: false
 
         steps:
@@ -19,7 +24,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ matrix.php-versions }}
+                  php-version: ${{ matrix.php-version }}
                   extensions: mbstring, intl, bz2
 
             - name: Setup problem matchers
