@@ -164,8 +164,14 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
             'property' => 'article:author',
             'content'  => $INFO['editor'],
         );
-        // $event->data['meta'][] = array('property' => 'article:author','content' => p_get_metadata($ID,'creator',true),);
-        // $event->data['meta'][] = array('property' => 'article:author','content' => p_get_metadata($ID,'user',true),);
+//        $event->data['meta'][] = array(
+//            'property' => 'article:author',
+//            'content'  => p_get_metadata($ID, 'creator', true),
+//        );
+//        $event->data['meta'][] = array(
+//            'property' => 'article:author',
+//            'content'  => p_get_metadata($ID, 'user', true),
+//        );
         $_subject = p_get_metadata($ID, 'subject', true);
         if(!empty($_subject)) {
             if(!is_array($_subject)) {
@@ -205,12 +211,18 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         }
 
         /* these are not valid for the GeoPoint type..
-        $region=$geotags['region'];
-        $country=$geotags['country'];
-        $placename=$geotags['placename'];
-        if (!empty($region))    {$event->data['meta'][] = array('property' => 'place:location:region',      'content' => $region,);}
-        if (!empty($placename)) {$event->data['meta'][] = array('property' => 'place:location:locality',    'content' => $placename,);}
-        if (!empty($country))   {$event->data['meta'][] = array('property' => 'place:location:country-name','content' => $country,);}
+        $region    = $geotags['region'];
+        $country   = $geotags['country'];
+        $placename = $geotags['placename'];
+        if(!empty($region)) {
+            $event->data['meta'][] = array('property' => 'place:location:region', 'content' => $region,);
+        }
+        if(!empty($placename)) {
+            $event->data['meta'][] = array('property' => 'place:location:locality', 'content' => $placename,);
+        }
+        if(!empty($country)) {
+            $event->data['meta'][] = array('property' => 'place:location:country-name', 'content' => $country,);
+        }
         */
 
         // optional facebook app ID
