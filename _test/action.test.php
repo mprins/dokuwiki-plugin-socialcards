@@ -25,7 +25,7 @@ class action_plugin_socialcards_test extends DokuWikiTest {
 
     protected $pluginsEnabled = array('socialcards');
 
-    public function setUp() : void {
+    public function setUp(): void {
         global $conf;
 
         parent::setUp();
@@ -34,11 +34,12 @@ class action_plugin_socialcards_test extends DokuWikiTest {
         $conf ['plugin']['socialcards']['twitterUserName'] = '@twitterUserName';
     }
 
-    public function testHeaders() {
+    public function testHeaders(): void {
         $request  = new TestRequest();
         $params = array(
             'id' => 'wiki:dokuwiki'
         );
+
         $response = $request->get($params, '/doku.php');
 
         print_r($response);

@@ -30,7 +30,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
      * @param $controller Doku_Event_Handler
      * @see DokuWiki_Action_Plugin::register()
      */
-    public function register(Doku_Event_Handler $controller) {
+    public function register(Doku_Event_Handler $controller): void {
         $controller->register_hook(
             'TPL_METAHEADER_OUTPUT',
             'BEFORE',
@@ -53,7 +53,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
      * @global array     $conf  global wiki configuration
      * @see http://www.dokuwiki.org/devel:event:tpl_metaheader_output
      */
-    public function handleTplMetaheaderOutput(Doku_Event $event, $param) {
+    public function handleTplMetaheaderOutput(Doku_Event $event, $param): void {
         global $ID, $conf, $INFO;
 
         if(!page_exists($ID)) {
@@ -86,7 +86,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
             );
         }
 
-        if($this->getConf('twitterUserName') != '') {
+        if($this->getConf('twitterUserName') !== '') {
             $event->data['meta'][] = array(
                 'name'    => 'twitter:creator',
                 'content' => $this->getConf('twitterUserName'),
@@ -144,7 +144,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
             'content'  => "article",
         );
         $ogImage               = $this->getImage();
-        $secure                = substr($ogImage, 0, 5) === 'https' ? ':secure_url' : '';
+        $secure                = strpos($ogImage, 'https') === 0 ? ':secure_url' : '';
         $event->data['meta'][] = array(
             'property' => 'og:image' . $secure,
             'content'  => $ogImage,
@@ -203,7 +203,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         $alt = $geotags['alt'];
         if(!empty($alt)) {
             // facebook expects feet...
-            $alt                   = $alt * 3.2808;
+            $alt *= 3.2808;
             $event->data['meta'][] = array(
                 'property' => 'place:location:altitude',
                 'content'  => $alt,
@@ -241,14 +241,14 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
      * @return string the url to the image to use for this page
      * @global string $ID page id
      */
-    private function getImage() {
+    private function getImage(): string {
         global $ID;
         $rel = p_get_metadata($ID, 'relation', true);
         $img = $rel['firstimage'];
 
         if(empty($img)) {
             $img = $this->getConf('fallbackImage');
-            if(substr($img, 0, 4) === "http") {
+            if(strpos($img, "http") === 0) {
                 // don't use ml() as this results in a HTTP redirect after
                 //   hitting the wiki making the card image fail.
                 return $img;
@@ -264,7 +264,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
      * @return string alt text
      * @global string $ID page id
      */
-    private function getImageAlt() {
+    private function getImageAlt(): string  {
         global $ID;
         $rel   = p_get_metadata($ID, 'relation', true);
         $imgID = $rel['firstimage'];
