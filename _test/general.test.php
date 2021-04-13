@@ -28,7 +28,7 @@ class general_plugin_socialcards_test extends DokuWikiTest {
     /**
      * Simple test to make sure the plugin.info.txt is in correct format
      */
-    public function test_plugininfo() {
+    public function test_plugininfo(): void {
         $file = __DIR__ . '/../plugin.info.txt';
         $this->assertFileExists($file);
 
@@ -52,11 +52,11 @@ class general_plugin_socialcards_test extends DokuWikiTest {
     /**
      * test if plugin is loaded.
      */
-    public function test_plugin_socialcards_isloaded() {
+    public function test_plugin_socialcards_isloaded(): void {
         global $plugin_controller;
         $this->assertTrue(
-                    in_array('socialcards', $plugin_controller->getList()),
-                    "socialcards plugin is loaded"
-                            );
+            in_array('socialcards', $plugin_controller->getList()),
+            "socialcards plugin is loaded"
+        );
     }
 }

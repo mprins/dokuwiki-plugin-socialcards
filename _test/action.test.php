@@ -25,18 +25,22 @@ class action_plugin_socialcards_test extends DokuWikiTest {
 
     protected $pluginsEnabled = array('socialcards');
 
-    public function setUp() {
+    public function setUp(): void {
         global $conf;
 
         parent::setUp();
 
-        $conf ['plugin']['socialcards']['twitterName'] = '@twitterName';
+        $conf ['plugin']['socialcards']['twitterName']     = '@twitterName';
         $conf ['plugin']['socialcards']['twitterUserName'] = '@twitterUserName';
     }
 
-    public function testHeaders() {
-        $request = new TestRequest();
-        $response = $request->get(array('id'=>'wiki:dokuwiki'), '/doku.php');
+    public function testHeaders(): void {
+        $request  = new TestRequest();
+        $params = array(
+            'id' => 'wiki:dokuwiki'
+        );
+
+        $response = $request->get($params, '/doku.php');
 
         print_r($response);
 
@@ -46,29 +50,51 @@ class action_plugin_socialcards_test extends DokuWikiTest {
         );
 
         // check twitter meta headers
-        $this->assertEquals('DokuWiki',
-                        $response->queryHTML('meta[name="twitter:title"]')->attr('content'));
-        $this->assertEquals('@twitterName',
-                        $response->queryHTML('meta[name="twitter:site"]')->attr('content'));
-        $this->assertEquals('summary',
-                        $response->queryHTML('meta[name="twitter:card"]')->attr('content'));
-        $this->assertEquals('@twitterUserName',
-                        $response->queryHTML('meta[name="twitter:creator"]')->attr('content'));
-        $this->assertEquals('http://wiki.example.com/./lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
-                        $response->queryHTML('meta[name="twitter:image"]')->attr('content'));
-        $this->assertEquals('',
-                        $response->queryHTML('meta[name="twitter:image:alt"]')->attr('content'));
+        $this->assertEquals(
+            'DokuWiki',
+            $response->queryHTML('meta[name="twitter:title"]')->attr('content')
+        );
+        $this->assertEquals(
+            '@twitterName',
+            $response->queryHTML('meta[name="twitter:site"]')->attr('content')
+        );
+        $this->assertEquals(
+            'summary',
+            $response->queryHTML('meta[name="twitter:card"]')->attr('content')
+        );
+        $this->assertEquals(
+            '@twitterUserName',
+            $response->queryHTML('meta[name="twitter:creator"]')->attr('content')
+        );
+        $this->assertEquals(
+            'http://wiki.example.com/./lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
+            $response->queryHTML('meta[name="twitter:image"]')->attr('content')
+        );
+        $this->assertEquals(
+            '',
+            $response->queryHTML('meta[name="twitter:image:alt"]')->attr('content')
+        );
 
         // check og meta headers
-        $this->assertEquals('My Test Wiki',
-                        $response->queryHTML('meta[property="og:site_name"]')->attr('content'));
-        $this->assertEquals('en_US',
-                        $response->queryHTML('meta[property="og:locale"]')->attr('content'));
-        $this->assertEquals('http://wiki.example.com/./lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
-                        $response->queryHTML('meta[property="og:image"]')->attr('content'));
-        $this->assertEquals('DokuWiki',
-                        $response->queryHTML('meta[property="og:title"]')->attr('content'));
-        $this->assertEquals('article',
-                        $response->queryHTML('meta[property="og:type"]')->attr('content'));
+        $this->assertEquals(
+            'My Test Wiki',
+            $response->queryHTML('meta[property="og:site_name"]')->attr('content')
+        );
+        $this->assertEquals(
+            'en_US',
+            $response->queryHTML('meta[property="og:locale"]')->attr('content')
+        );
+        $this->assertEquals(
+            'http://wiki.example.com/./lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
+            $response->queryHTML('meta[property="og:image"]')->attr('content')
+        );
+        $this->assertEquals(
+            'DokuWiki',
+            $response->queryHTML('meta[property="og:title"]')->attr('content')
+        );
+        $this->assertEquals(
+            'article',
+            $response->queryHTML('meta[property="og:type"]')->attr('content')
+        );
     }
 }

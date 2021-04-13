@@ -21,8 +21,9 @@
  * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
  */
-$conf['twitterName'] = '';
-$conf['twitterUserName'] = '';
-$conf['fallbackImage'] = 'wiki:dokuwiki-128.png';
+
+$conf['twitterName']       = '';
+$conf['twitterUserName']   = '';
+$conf['fallbackImage']     = 'wiki:dokuwiki-128.png';
 $conf['languageTerritory'] = 'en_US';
-$conf['fbAppId'] = '';
+$conf['fbAppId']           = '';
