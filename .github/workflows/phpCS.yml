@@ -7,12 +7,13 @@ jobs:
         name: PHP CodeSniffer
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v2
 
             - name: Setup PHP
-              uses: nanasess/setup-php@master
+              uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.3
+                php-version: '7.4'
+                tools: cs2pr, phpcs
 
             - name: retrieve script
               run: wget https://raw.github.com/splitbrain/dokuwiki-travis/master/travis.sh
@@ -23,8 +24,7 @@ jobs:
                   DOKUWIKI : master
               run: sh travis.sh
 
-            - name: Download PHPCS
-              run: wget https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-
+#            - name: run PHP codesniffer
+#              run: php phpcs -v --runtime-set ignore_warnings_on_exit true --standard=_test/phpcs.xml lib/plugins/socialcards
             - name: run PHP codesniffer
-              run: php phpcs.phar -v --runtime-set ignore_warnings_on_exit true --standard=_test/phpcs.xml lib/plugins/socialcards
+              run: phpcs --standard=_test/phpcs_MigrationAdjustments.xml --report=checkstyle --runtime-set ignore_warnings_on_exit lib/plugins/socialcards | cs2pr
