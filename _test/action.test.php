@@ -35,18 +35,17 @@ class action_plugin_socialcards_test extends DokuWikiTest {
     }
 
     public function testHeaders(): void {
-        $request  = new TestRequest();
-        $params = array(
+        $request = new TestRequest();
+        $params  = array(
             'id' => 'wiki:dokuwiki'
         );
 
         $response = $request->get($params, '/doku.php');
 
-        print_r($response);
+        // print_r($response);
 
-        $this->assertTrue(
-            strpos($response->getContent(), 'DokuWiki') !== false,
-            'DokuWiki was not a word in the output'
+        $this->assertNotFalse(
+            strpos($response->getContent(), 'DokuWiki'), 'DokuWiki was not a word in the output'
         );
 
         // check twitter meta headers

@@ -21,7 +21,6 @@
  * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
  */
-
 class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 
     /**
@@ -203,7 +202,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         $alt = $geotags['alt'];
         if(!empty($alt)) {
             // facebook expects feet...
-            $alt *= 3.2808;
+            $alt                   *= 3.2808;
             $event->data['meta'][] = array(
                 'property' => 'place:location:altitude',
                 'content'  => $alt,
@@ -264,7 +263,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
      * @return string alt text
      * @global string $ID page id
      */
-    private function getImageAlt(): string  {
+    private function getImageAlt(): string {
         global $ID;
         $rel   = p_get_metadata($ID, 'relation', true);
         $imgID = $rel['firstimage'];

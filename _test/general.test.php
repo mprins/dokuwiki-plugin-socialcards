@@ -54,9 +54,8 @@ class general_plugin_socialcards_test extends DokuWikiTest {
      */
     public function test_plugin_socialcards_isloaded(): void {
         global $plugin_controller;
-        $this->assertTrue(
-            in_array('socialcards', $plugin_controller->getList()),
-            "socialcards plugin is loaded"
+        $this->assertContains(
+            'socialcards', $plugin_controller->getList(), "socialcards plugin is loaded"
         );
     }
 }
