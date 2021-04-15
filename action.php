@@ -21,7 +21,6 @@
  * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
  */
-
 class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 
     /**
@@ -187,43 +186,44 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 
         // place namespace http://ogp.me/ns/place#
         $geotags = p_get_metadata($ID, 'geo', true);
-        $lat     = $geotags['lat'];
-        $lon     = $geotags['lon'];
-        if(!(empty($lat) && empty($lon))) {
-            $event->data['meta'][] = array(
-                'property' => 'place:location:latitude',
-                'content'  => $lat,
-            );
-            $event->data['meta'][] = array(
-                'property' => 'place:location:longitude',
-                'content'  => $lon,
-            );
+        if(is_array($geotags)) {
+            $lat = $geotags['lat'] ?? 0;
+            $lon = $geotags['lon'] ?? 0;
+            if(!(empty($lat) && empty($lon))) {
+                $event->data['meta'][] = array(
+                    'property' => 'place:location:latitude',
+                    'content'  => $lat,
+                );
+                $event->data['meta'][] = array(
+                    'property' => 'place:location:longitude',
+                    'content'  => $lon,
+                );
+            }
+            // see https://developers.facebook.com/docs/opengraph/property-types/#geopoint
+            $alt = $geotags['alt'] ?? 0;
+            if(!empty($alt)) {
+                // facebook expects feet...
+                $alt                   *= 3.2808;
+                $event->data['meta'][] = array(
+                    'property' => 'place:location:altitude',
+                    'content'  => $alt,
+                );
+            }
+            /* these are not valid for the GeoPoint type..
+            $region    = $geotags['region'];
+            $country   = $geotags['country'];
+            $placename = $geotags['placename'];
+            if(!empty($region)) {
+                $event->data['meta'][] = array('property' => 'place:location:region', 'content' => $region,);
+            }
+            if(!empty($placename)) {
+                $event->data['meta'][] = array('property' => 'place:location:locality', 'content' => $placename,);
+            }
+            if(!empty($country)) {
+                $event->data['meta'][] = array('property' => 'place:location:country-name', 'content' => $country,);
+            }
+            */
         }
-        // see https://developers.facebook.com/docs/opengraph/property-types/#geopoint
-        $alt = $geotags['alt'];
-        if(!empty($alt)) {
-            // facebook expects feet...
-            $alt *= 3.2808;
-            $event->data['meta'][] = array(
-                'property' => 'place:location:altitude',
-                'content'  => $alt,
-            );
-        }
-
-        /* these are not valid for the GeoPoint type..
-        $region    = $geotags['region'];
-        $country   = $geotags['country'];
-        $placename = $geotags['placename'];
-        if(!empty($region)) {
-            $event->data['meta'][] = array('property' => 'place:location:region', 'content' => $region,);
-        }
-        if(!empty($placename)) {
-            $event->data['meta'][] = array('property' => 'place:location:locality', 'content' => $placename,);
-        }
-        if(!empty($country)) {
-            $event->data['meta'][] = array('property' => 'place:location:country-name', 'content' => $country,);
-        }
-        */
 
         // optional facebook app ID
         $appId = $this->getConf('fbAppId');
@@ -264,7 +264,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
      * @return string alt text
      * @global string $ID page id
      */
-    private function getImageAlt(): string  {
+    private function getImageAlt(): string {
         global $ID;
         $rel   = p_get_metadata($ID, 'relation', true);
         $imgID = $rel['firstimage'];

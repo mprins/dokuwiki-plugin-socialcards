@@ -19,11 +19,11 @@
  *
  * @license BSD license
  *
- * @author Alexandre Belchior <alexbelchior@gmail.com>
- * @author Mark C. Prins <mprins@users.sf.net>
+ * @author  Alexandre Belchior <alexbelchior@gmail.com>
+ * @author  Mark C. Prins <mprins@users.sf.net>
  */
-$lang['twitterName']           = 'Nome da conta do Twitter para este site';
-$lang['twitterUserName']       = 'Nome da conta do Twitter do autor';
-$lang['fallbackImage']         = 'Imagem padrão (fallback) para cartões OpenGraph e Twitter. (um URL completo ou um ID de mídia)';
-$lang['languageTerritory']     = 'Localidade (idioma e território).';
-$lang['fbAppId']               = 'Facebook App ID (opcional)';
+$lang['twitterName']       = 'Nome da conta do Twitter para este site';
+$lang['twitterUserName']   = 'Nome da conta do Twitter do autor';
+$lang['fallbackImage']     = 'Imagem padrão (fallback) para cartões OpenGraph e Twitter. (um URL completo ou um ID de mídia)';
+$lang['languageTerritory'] = 'Localidade (idioma e território).';
+$lang['fbAppId']           = 'Facebook App ID (opcional)';

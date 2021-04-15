@@ -19,11 +19,11 @@
  *
  * @license BSD license
  *
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
- * @author Mark C. Prins <mprins@users.sf.net>
+ * @author  Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author  Mark C. Prins <mprins@users.sf.net>
  */
-$lang['twitterName']           = 'Имя твиттер-аккаунта для сайта';
-$lang['twitterUserName']       = 'Имя твиттер-аккаунта автора';
-$lang['fallbackImage']         = 'Картинка по умолчанию (запасной вариант) для карточек OpenGraph и «Твиттера» (полный URL-адрес или ID файла в вики)';
-$lang['languageTerritory']     = 'Региональные настройки (locale) (язык и страна)';
-$lang['fbAppId']               = 'ID приложения в «Фейсбуке» (необязательно)';
+$lang['twitterName']       = 'Имя твиттер-аккаунта для сайта';
+$lang['twitterUserName']   = 'Имя твиттер-аккаунта автора';
+$lang['fallbackImage']     = 'Картинка по умолчанию (запасной вариант) для карточек OpenGraph и «Твиттера» (полный URL-адрес или ID файла в вики)';
+$lang['languageTerritory'] = 'Региональные настройки (locale) (язык и страна)';
+$lang['fbAppId']           = 'ID приложения в «Фейсбуке» (необязательно)';

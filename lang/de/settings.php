@@ -20,7 +20,7 @@
  *
  * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
- * @author Lars Pötter <Lars_poetter@gmx.de>
+ * @author  Lars Pötter <Lars_poetter@gmx.de>
  */
 $lang['twitterName']       = 'Twitter Account Name für diese Seite';
 $lang['twitterUserName']   = 'Twitter Account Name des Autors';
