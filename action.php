@@ -73,10 +73,10 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
 
         $event->data['meta'][] = array(
             'name'    => 'twitter:title',
-            'content' => p_get_metadata($ID, 'title', true),
+            'content' => p_get_metadata($ID, 'title', METADATA_RENDER_USING_SIMPLE_CACHE),
         );
 
-        $desc = p_get_metadata($ID, 'description', true);
+        $desc = p_get_metadata($ID, 'description', METADATA_RENDER_USING_SIMPLE_CACHE);
         if(!empty($desc)) {
             $desc                  = str_replace("\n", " ", $desc['abstract']);
             $event->data['meta'][] = array(
@@ -130,7 +130,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         );
         $event->data['meta'][] = array(
             'property' => 'og:title',
-            'content'  => p_get_metadata($ID, 'title', true),
+            'content'  => p_get_metadata($ID, 'title', METADATA_RENDER_USING_SIMPLE_CACHE),
         );
         if(!empty($desc)) {
             $event->data['meta'][] = array(
@@ -150,7 +150,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         );
 
         // article namespace http://ogp.me/ns/article#
-        $_dates                = p_get_metadata($ID, 'date', true);
+        $_dates                = p_get_metadata($ID, 'date', METADATA_RENDER_USING_SIMPLE_CACHE);
         $event->data['meta'][] = array(
             'property' => 'article:published_time',
             'content'  => dformat($_dates['created']),
@@ -165,13 +165,13 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         );
 //        $event->data['meta'][] = array(
 //            'property' => 'article:author',
-//            'content'  => p_get_metadata($ID, 'creator', true),
+//            'content'  => p_get_metadata($ID, 'creator', METADATA_RENDER_USING_SIMPLE_CACHE),
 //        );
 //        $event->data['meta'][] = array(
 //            'property' => 'article:author',
-//            'content'  => p_get_metadata($ID, 'user', true),
+//            'content'  => p_get_metadata($ID, 'user', METADATA_RENDER_USING_SIMPLE_CACHE),
 //        );
-        $_subject = p_get_metadata($ID, 'subject', true);
+        $_subject = p_get_metadata($ID, 'subject', METADATA_RENDER_USING_SIMPLE_CACHE);
         if(!empty($_subject)) {
             if(!is_array($_subject)) {
                 $_subject = array($_subject);
@@ -185,7 +185,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         }
 
         // place namespace http://ogp.me/ns/place#
-        $geotags = p_get_metadata($ID, 'geo', true);
+        $geotags = p_get_metadata($ID, 'geo', METADATA_RENDER_USING_SIMPLE_CACHE);
         if(is_array($geotags)) {
             $lat = $geotags['lat'] ?? 0;
             $lon = $geotags['lon'] ?? 0;
@@ -243,7 +243,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
      */
     private function getImage(): string {
         global $ID;
-        $rel = p_get_metadata($ID, 'relation', true);
+        $rel = p_get_metadata($ID, 'relation', METADATA_RENDER_USING_SIMPLE_CACHE);
         $img = $rel['firstimage'];
 
         if(empty($img)) {
@@ -266,7 +266,7 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
      */
     private function getImageAlt(): string {
         global $ID;
-        $rel   = p_get_metadata($ID, 'relation', true);
+        $rel   = p_get_metadata($ID, 'relation', METADATA_RENDER_USING_SIMPLE_CACHE);
         $imgID = $rel['firstimage'];
         $alt   = "";
 

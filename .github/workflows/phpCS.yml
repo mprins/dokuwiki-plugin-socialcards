@@ -24,12 +24,9 @@ jobs:
                   DOKUWIKI : master
               run: sh travis.sh
 
-#            - name: run PHP codesniffer
-#              run: php phpcs -v --runtime-set ignore_warnings_on_exit true --standard=_test/phpcs.xml lib/plugins/socialcards
             - name: run PHP codesniffer
               continue-on-error: true
-              run: phpcs --standard=_test/phpcs_MigrationAdjustments.xml --report-checkstyle=./phpcs-report.xml --report-full --runtime-set ignore_warnings_on_exit lib/plugins/socialcards
-              
+              run: phpcs -v --standard=_test/phpcs_MigrationAdjustments.xml --report-full --report-checkstyle=./phpcs-report.xml lib/plugins/socialcards
+
             - name: Annotate PR
               run: cs2pr ./phpcs-report.xml
-            
