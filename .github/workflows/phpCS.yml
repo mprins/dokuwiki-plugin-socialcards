@@ -1,6 +1,6 @@
 name: PHP Code Style
 
-on: [push]
+on: [pull_request]
 
 jobs:
     phpcs:
@@ -27,4 +27,9 @@ jobs:
 #            - name: run PHP codesniffer
 #              run: php phpcs -v --runtime-set ignore_warnings_on_exit true --standard=_test/phpcs.xml lib/plugins/socialcards
             - name: run PHP codesniffer
-              run: phpcs -q --standard=_test/phpcs_MigrationAdjustments.xml --report=checkstyle --runtime-set ignore_warnings_on_exit lib/plugins/socialcards | cs2pr
+              continue-on-error: true
+              run: phpcs --standard=_test/phpcs_MigrationAdjustments.xml --report-checkstyle=./phpcs-report.xml --report-full --runtime-set ignore_warnings_on_exit lib/plugins/socialcards
+              
+            - name: Annotate PR
+              run: cs2pr ./phpcs-report.xml
+            
