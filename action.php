@@ -58,6 +58,9 @@ class action_plugin_socialcards extends DokuWiki_Action_Plugin {
         if(!page_exists($ID)) {
             return;
         }
+        if(auth_quickaclcheck($ID) < AUTH_READ) {
+            return;
+        }
 
         // twitter card, see https://dev.twitter.com/cards/markup
         // creat a summary card, see https://dev.twitter.com/cards/types/summary
