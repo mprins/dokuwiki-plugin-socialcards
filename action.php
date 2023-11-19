@@ -47,7 +47,7 @@ class action_plugin_socialcards extends ActionPlugin
      * Retrieve metadata and add to the head of the page using appropriate meta
      * tags unless the page does not exist.
      *
-     * @param Doku_Event $event the DokuWiki event. $event->data is a two-dimensional
+     * @param Event $event the DokuWiki event. $event->data is a two-dimensional
      *                          array of all meta headers. The keys are meta, link and script.
      * @param mixed      $param the parameters passed to register_hook when this
      *                          handler was registered (not used)
