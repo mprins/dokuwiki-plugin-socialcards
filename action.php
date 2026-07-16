@@ -5,7 +5,7 @@ use dokuwiki\Extension\EventHandler;
 use dokuwiki\Extension\Event;
 
 /*
- * Copyright (c) 2013-2016 Mark C. Prins <mprins@users.sf.net>
+ * Copyright (c) 2013-2026 Mark C. Prins <mprins@users.sf.net>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -24,6 +24,8 @@ use dokuwiki\Extension\Event;
  *
  * @license BSD license
  * @author  Mark C. Prins <mprins@users.sf.net>
+ *
+ * @phpcs:disable Squiz.Classes.ValidClassName.NotPascalCase
  */
 class action_plugin_socialcards extends ActionPlugin
 {
@@ -49,7 +51,6 @@ class action_plugin_socialcards extends ActionPlugin
      *
      * @param Event $event the DokuWiki event. $event->data is a two-dimensional
      *                          array of all meta headers. The keys are meta, link and script.
-     * @param mixed      $param the parameters passed to register_hook when this
      *                          handler was registered (not used)
      *
      * @global array     $INFO
@@ -57,7 +58,7 @@ class action_plugin_socialcards extends ActionPlugin
      * @global array     $conf  global wiki configuration
      * @see http://www.dokuwiki.org/devel:event:tpl_metaheader_output
      */
-    public function handleTplMetaheaderOutput(Event $event, $param): void
+    public function handleTplMetaheaderOutput(Event $event): void
     {
         global $ID, $conf, $INFO;
 
@@ -71,10 +72,9 @@ class action_plugin_socialcards extends ActionPlugin
         // twitter card, see https://dev.twitter.com/cards/markup
         // creat a summary card, see https://dev.twitter.com/cards/types/summary
         $event->data['meta'][] = ['name'    => 'twitter:card', 'content' => "summary"];
-
         $event->data['meta'][] = ['name'    => 'twitter:site', 'content' => $this->getConf('twitterName')];
-
-        $event->data['meta'][] = ['name'    => 'twitter:title', 'content' => p_get_metadata($ID, 'title', METADATA_RENDER_USING_SIMPLE_CACHE)];
+        $event->data['meta'][] = ['name'    => 'twitter:title',
+            'content' => p_get_metadata($ID, 'title', METADATA_RENDER_USING_SIMPLE_CACHE)];
 
         $desc = p_get_metadata($ID, 'description', METADATA_RENDER_USING_SIMPLE_CACHE);
         if (!empty($desc)) {
@@ -83,7 +83,10 @@ class action_plugin_socialcards extends ActionPlugin
         }
 
         if ($this->getConf('twitterUserName') !== '') {
-            $event->data['meta'][] = ['name'    => 'twitter:creator', 'content' => $this->getConf('twitterUserName')];
+            $event->data['meta'][] = [
+                'name' => 'twitter:creator',
+                'content' => $this->getConf('twitterUserName')
+            ];
         }
 
         $event->data['meta'][] = ['name'    => 'twitter:image', 'content' => $this->getImage()];
@@ -107,7 +110,8 @@ class action_plugin_socialcards extends ActionPlugin
         $event->data['meta'][] = ['property' => 'og:locale', 'content'  => $this->getConf('languageTerritory')];
         $event->data['meta'][] = ['property' => 'og:site_name', 'content'  => $conf['title']];
         $event->data['meta'][] = ['property' => 'og:url', 'content'  => wl($ID, '', true)];
-        $event->data['meta'][] = ['property' => 'og:title', 'content'  => p_get_metadata($ID, 'title', METADATA_RENDER_USING_SIMPLE_CACHE)];
+        $event->data['meta'][] = ['property' => 'og:title',
+            'content'  => p_get_metadata($ID, 'title', METADATA_RENDER_USING_SIMPLE_CACHE)];
         if (!empty($desc)) {
             $event->data['meta'][] = ['property' => 'og:description', 'content'  => $desc];
         }
@@ -218,8 +222,9 @@ class action_plugin_socialcards extends ActionPlugin
         if (!empty($imgID)) {
             require_once(DOKU_INC . 'inc/JpegMeta.php');
             $jpegmeta = new JpegMeta(mediaFN($imgID));
-            $tags     = ['IPTC.Caption', 'EXIF.UserComment', 'EXIF.TIFFImageDescription', 'EXIF.TIFFUserComment', 'IPTC.Headline', 'Xmp.dc:title'];
-            $alt      = media_getTag($tags, $jpegmeta, "");
+            $tags     = ['IPTC.Caption', 'EXIF.UserComment', 'EXIF.TIFFImageDescription',
+                'EXIF.TIFFUserComment', 'IPTC.Headline', 'Xmp.dc:title'];
+            $alt      = media_getTag($tags, $jpegmeta);
         }
         return htmlspecialchars($alt);
     }

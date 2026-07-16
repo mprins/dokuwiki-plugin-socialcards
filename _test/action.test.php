@@ -73,7 +73,7 @@ class action_plugin_socialcards_test extends DokuWikiTest
             $response->queryHTML('meta[name="twitter:creator"]')->attr('content')
         );
         $this->assertEquals(
-            'http://wiki.example.com/./lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
+            'http://wiki.example.com/lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
             $response->queryHTML('meta[name="twitter:image"]')->attr('content')
         );
         $this->assertEquals(
@@ -91,7 +91,7 @@ class action_plugin_socialcards_test extends DokuWikiTest
             $response->queryHTML('meta[property="og:locale"]')->attr('content')
         );
         $this->assertEquals(
-            'http://wiki.example.com/./lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
+            'http://wiki.example.com/lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
             $response->queryHTML('meta[property="og:image"]')->attr('content')
         );
         $this->assertEquals(
