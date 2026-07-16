@@ -113,7 +113,7 @@ class action_plugin_socialcards extends ActionPlugin
         }
         $event->data['meta'][] = ['property' => 'og:type', 'content'  => "article"];
         $ogImage               = $this->getImage();
-        $secure                = strpos($ogImage, 'https') === 0 ? ':secure_url' : '';
+        $secure                = str_starts_with($ogImage, 'https') ? ':secure_url' : '';
         $event->data['meta'][] = ['property' => 'og:image' . $secure, 'content'  => $ogImage];
 
         // article namespace http://ogp.me/ns/article#
@@ -192,7 +192,7 @@ class action_plugin_socialcards extends ActionPlugin
 
         if (empty($img)) {
             $img = $this->getConf('fallbackImage');
-            if (strpos($img, "http") === 0) {
+            if (str_starts_with($img, "http")) {
                 // don't use ml() as this results in a HTTP redirect after
                 //   hitting the wiki making the card image fail.
                 return $img;

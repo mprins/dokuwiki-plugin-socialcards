@@ -21,11 +21,13 @@
  * @group plugin_socialcards
  * @group plugins
  */
-class action_plugin_socialcards_test extends DokuWikiTest {
+class action_plugin_socialcards_test extends DokuWikiTest
+{
 
     protected $pluginsEnabled = array('socialcards');
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         global $conf;
 
         parent::setUp();
@@ -34,7 +36,11 @@ class action_plugin_socialcards_test extends DokuWikiTest {
         $conf ['plugin']['socialcards']['twitterUserName'] = '@twitterUserName';
     }
 
-    public function testHeaders(): void {
+    /**
+     * @throws Exception if any
+     */
+    public function testHeaders(): void
+    {
         $request = new TestRequest();
         $params  = array(
             'id' => 'wiki:dokuwiki'
@@ -45,7 +51,8 @@ class action_plugin_socialcards_test extends DokuWikiTest {
         // print_r($response);
 
         $this->assertNotFalse(
-            strpos($response->getContent(), 'DokuWiki'), 'DokuWiki was not a word in the output'
+            strpos($response->getContent(), 'DokuWiki'),
+            'DokuWiki was not a word in the output'
         );
 
         // check twitter meta headers
