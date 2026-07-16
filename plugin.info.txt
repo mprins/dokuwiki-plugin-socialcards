@@ -5,3 +5,4 @@ date   2023-06-30
 name   socialcards plugin
 desc   Adds social network cards to your wiki
 url    https://dokuwiki.org/plugin:socialcards
+minphp 8.2
