@@ -21,11 +21,13 @@
  * @group plugin_socialcards
  * @group plugins
  */
-class action_plugin_socialcards_test extends DokuWikiTest {
+class action_plugin_socialcards_test extends DokuWikiTest
+{
 
     protected $pluginsEnabled = array('socialcards');
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         global $conf;
 
         parent::setUp();
@@ -34,7 +36,11 @@ class action_plugin_socialcards_test extends DokuWikiTest {
         $conf ['plugin']['socialcards']['twitterUserName'] = '@twitterUserName';
     }
 
-    public function testHeaders(): void {
+    /**
+     * @throws Exception if any
+     */
+    public function testHeaders(): void
+    {
         $request = new TestRequest();
         $params  = array(
             'id' => 'wiki:dokuwiki'
@@ -45,7 +51,8 @@ class action_plugin_socialcards_test extends DokuWikiTest {
         // print_r($response);
 
         $this->assertNotFalse(
-            strpos($response->getContent(), 'DokuWiki'), 'DokuWiki was not a word in the output'
+            strpos($response->getContent(), 'DokuWiki'),
+            'DokuWiki was not a word in the output'
         );
 
         // check twitter meta headers
@@ -66,7 +73,7 @@ class action_plugin_socialcards_test extends DokuWikiTest {
             $response->queryHTML('meta[name="twitter:creator"]')->attr('content')
         );
         $this->assertEquals(
-            'http://wiki.example.com/./lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
+            'http://wiki.example.com/lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
             $response->queryHTML('meta[name="twitter:image"]')->attr('content')
         );
         $this->assertEquals(
@@ -84,7 +91,7 @@ class action_plugin_socialcards_test extends DokuWikiTest {
             $response->queryHTML('meta[property="og:locale"]')->attr('content')
         );
         $this->assertEquals(
-            'http://wiki.example.com/./lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
+            'http://wiki.example.com/lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
             $response->queryHTML('meta[property="og:image"]')->attr('content')
         );
         $this->assertEquals(

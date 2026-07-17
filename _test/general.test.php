@@ -15,20 +15,24 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+use dokuwiki\MailUtils;
+
 /**
  * General tests for the socialcards plugin
  *
  * @group plugin_socialcards
  * @group plugins
  */
-class general_plugin_socialcards_test extends DokuWikiTest {
+class general_plugin_socialcards_test extends DokuWikiTest
+{
 
     protected $pluginsEnabled = array('socialcards');
 
     /**
      * Simple test to make sure the plugin.info.txt is in correct format
      */
-    public function test_plugininfo(): void {
+    public function test_plugininfo(): void
+    {
         $file = __DIR__ . '/../plugin.info.txt';
         $this->assertFileExists($file);
 
@@ -43,19 +47,22 @@ class general_plugin_socialcards_test extends DokuWikiTest {
         $this->assertArrayHasKey('url', $info);
 
         $this->assertEquals('socialcards', $info['base']);
-        $this->assertRegExp('/^https?:\/\//', $info['url']);
-        $this->assertTrue(mail_isvalid($info['email']));
-        $this->assertRegExp('/^\d\d\d\d-\d\d-\d\d$/', $info['date']);
+        $this->assertMatchesRegularExpression('/^https?:\/\//', $info['url']);
+        $this->assertTrue(MailUtils::isValid($info['email']));
+        $this->assertMatchesRegularExpression('/^\d\d\d\d-\d\d-\d\d$/', $info['date']);
         $this->assertTrue(false !== strtotime($info['date']));
     }
 
     /**
      * test if plugin is loaded.
      */
-    public function test_plugin_socialcards_isloaded(): void {
+    public function test_plugin_socialcards_isloaded(): void
+    {
         global $plugin_controller;
         $this->assertContains(
-            'socialcards', $plugin_controller->getList(), "socialcards plugin is loaded"
+            'socialcards',
+            $plugin_controller->getList(),
+            "socialcards plugin is loaded"
         );
     }
 }
