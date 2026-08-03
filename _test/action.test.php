@@ -76,9 +76,11 @@ class action_plugin_socialcards_test extends DokuWikiTest
             'http://wiki.example.com/lib/exe/fetch.php?media=wiki:dokuwiki-128.png',
             $response->queryHTML('meta[name="twitter:image"]')->attr('content')
         );
-        $this->assertEquals(
-            '',
-            $response->queryHTML('meta[name="twitter:image:alt"]')->attr('content')
+        $this->assertNotFalse(
+            strpos(
+                $response->queryHTML('meta[name="twitter:image:alt"]')->attr('content'),
+                'DokuWiki is a standards compliant, simple to use Wiki'
+            )
         );
 
         // check og meta headers

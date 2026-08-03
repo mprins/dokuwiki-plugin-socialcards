@@ -77,10 +77,19 @@ class action_plugin_socialcards extends ActionPlugin
             'content' => p_get_metadata($ID, 'title', METADATA_RENDER_USING_SIMPLE_CACHE)];
 
         $desc = p_get_metadata($ID, 'description', METADATA_RENDER_USING_SIMPLE_CACHE);
+        $alt = $this->getImageAlt();
         if (!empty($desc)) {
-            $desc                  = str_replace("\n", " ", $desc['abstract']);
-            $event->data['meta'][] = ['name'    => 'twitter:description', 'content' => $desc];
+            $desc = str_replace("\n", " ", $desc['abstract']);
+        } else {
+            $desc = '';
         }
+        if (empty($alt)) {
+            $alt = $desc;
+        }
+
+        $event->data['meta'][] = ['name' => 'twitter:description', 'content' => $desc];
+        $event->data['meta'][] = ['name'    => 'twitter:image', 'content' => $this->getImage()];
+        $event->data['meta'][] = ['name' => 'twitter:image:alt', 'content' => $alt];
 
         if ($this->getConf('twitterUserName') !== '') {
             $event->data['meta'][] = [
@@ -88,9 +97,6 @@ class action_plugin_socialcards extends ActionPlugin
                 'content' => $this->getConf('twitterUserName')
             ];
         }
-
-        $event->data['meta'][] = ['name'    => 'twitter:image', 'content' => $this->getImage()];
-        $event->data['meta'][] = ['name'    => 'twitter:image:alt', 'content' => $this->getImageAlt()];
 
         // opengraph, see http://ogp.me/
         //
@@ -125,14 +131,6 @@ class action_plugin_socialcards extends ActionPlugin
         $event->data['meta'][] = ['property' => 'article:published_time', 'content'  => dformat($_dates['created'])];
         $event->data['meta'][] = ['property' => 'article:modified_time', 'content'  => dformat($_dates['modified'])];
         $event->data['meta'][] = ['property' => 'article:author', 'content'  => $INFO['editor']];
-//        $event->data['meta'][] = array(
-//            'property' => 'article:author',
-//            'content'  => p_get_metadata($ID, 'creator', METADATA_RENDER_USING_SIMPLE_CACHE),
-//        );
-//        $event->data['meta'][] = array(
-//            'property' => 'article:author',
-//            'content'  => p_get_metadata($ID, 'user', METADATA_RENDER_USING_SIMPLE_CACHE),
-//        );
         $_subject = p_get_metadata($ID, 'subject', METADATA_RENDER_USING_SIMPLE_CACHE);
         if (!empty($_subject)) {
             if (!is_array($_subject)) {
@@ -159,20 +157,19 @@ class action_plugin_socialcards extends ActionPlugin
                 $alt                   *= 3.2808;
                 $event->data['meta'][] = ['property' => 'place:location:altitude', 'content'  => $alt];
             }
-            /* these are not valid for the GeoPoint type..
+            /* these are not valid for the GeoPoint type... */
             $region    = $geotags['region'];
             $country   = $geotags['country'];
             $placename = $geotags['placename'];
-            if(!empty($region)) {
+            if (!empty($region)) {
                 $event->data['meta'][] = array('property' => 'place:location:region', 'content' => $region,);
             }
-            if(!empty($placename)) {
+            if (!empty($placename)) {
                 $event->data['meta'][] = array('property' => 'place:location:locality', 'content' => $placename,);
             }
-            if(!empty($country)) {
+            if (!empty($country)) {
                 $event->data['meta'][] = array('property' => 'place:location:country-name', 'content' => $country,);
             }
-            */
         }
 
         // optional facebook app ID
@@ -209,7 +206,7 @@ class action_plugin_socialcards extends ActionPlugin
     /**
      * Gets the alt text for this page image.
      *
-     * @return string alt text
+     * @return string alt text, may be an empty string
      * @global string $ID page id
      */
     private function getImageAlt(): string
@@ -226,6 +223,10 @@ class action_plugin_socialcards extends ActionPlugin
                 'EXIF.TIFFUserComment', 'IPTC.Headline', 'Xmp.dc:title'];
             $alt      = media_getTag($tags, $jpegmeta);
         }
-        return htmlspecialchars($alt);
+        if (empty($alt)) {
+            return "";
+        } else {
+            return htmlspecialchars($alt);
+        }
     }
 }
