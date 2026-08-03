@@ -162,13 +162,13 @@ class action_plugin_socialcards extends ActionPlugin
             $country   = $geotags['country'];
             $placename = $geotags['placename'];
             if (!empty($region)) {
-                $event->data['meta'][] = array('property' => 'place:location:region', 'content' => $region,);
+                $event->data['meta'][] = ['property' => 'place:location:region', 'content' => $region,];
             }
             if (!empty($placename)) {
-                $event->data['meta'][] = array('property' => 'place:location:locality', 'content' => $placename,);
+                $event->data['meta'][] = ['property' => 'place:location:locality', 'content' => $placename,];
             }
             if (!empty($country)) {
-                $event->data['meta'][] = array('property' => 'place:location:country-name', 'content' => $country,);
+                $event->data['meta'][] = ['property' => 'place:location:country-name', 'content' => $country,];
             }
         }
 
