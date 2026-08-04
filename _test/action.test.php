@@ -105,4 +105,39 @@ class action_plugin_socialcards_test extends DokuWikiTest
             $response->queryHTML('meta[property="og:type"]')->attr('content')
         );
     }
+
+    /**
+     * Ensure incomplete geo metadata does not trigger warnings and only emits available tags.
+     */
+    public function testHeadersWithPartialGeoMetadata(): void
+    {
+        global $ID;
+
+        $ID = 'wiki:dokuwiki';
+        p_set_metadata($ID, ['geo' => ['lat' => 52.0, 'lon' => 4.0]], true, false);
+
+        $request = new TestRequest();
+        $response = $request->get(['id' => $ID], '/doku.php');
+
+        $this->assertEquals(
+            '52',
+            $response->queryHTML('meta[property="place:location:latitude"]')->attr('content')
+        );
+        $this->assertEquals(
+            '4',
+            $response->queryHTML('meta[property="place:location:longitude"]')->attr('content')
+        );
+        $this->assertCount(
+            0,
+            $response->queryHTML('meta[property="place:location:region"]')
+        );
+        $this->assertCount(
+            0,
+            $response->queryHTML('meta[property="place:location:locality"]')
+        );
+        $this->assertCount(
+            0,
+            $response->queryHTML('meta[property="place:location:country-name"]')
+        );
+    }
 }
