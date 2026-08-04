@@ -114,7 +114,7 @@ class action_plugin_socialcards_test extends DokuWikiTest
         global $ID;
 
         $ID = 'wiki:dokuwiki';
-        p_set_metadata($ID, ['geo' => ['lat' => 52.0, 'lon' => 4.0]], true, false);
+        p_set_metadata($ID, ['geo' => ['lat' => 52.0, 'lon' => 4.0]], true, true);
 
         $request = new TestRequest();
         $response = $request->get(['id' => $ID], '/doku.php');
