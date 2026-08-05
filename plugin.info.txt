@@ -1,7 +1,7 @@
 base   socialcards
 author Mark C. Prins
 email  mprins@users.sf.net
-date   2026-08-03
+date   2026-08-05
 name   socialcards plugin
 desc   Adds social network cards to your wiki
 url    https://dokuwiki.org/plugin:socialcards

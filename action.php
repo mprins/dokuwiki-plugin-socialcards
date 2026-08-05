@@ -158,9 +158,9 @@ class action_plugin_socialcards extends ActionPlugin
                 $event->data['meta'][] = ['property' => 'place:location:altitude', 'content'  => $alt];
             }
             /* these are not valid for the GeoPoint type... */
-            $region    = $geotags['region'];
-            $country   = $geotags['country'];
-            $placename = $geotags['placename'];
+            $region    = $geotags['region'] ?? '';
+            $country   = $geotags['country'] ?? '';
+            $placename = $geotags['placename'] ?? '';
             if (!empty($region)) {
                 $event->data['meta'][] = ['property' => 'place:location:region', 'content' => $region,];
             }
